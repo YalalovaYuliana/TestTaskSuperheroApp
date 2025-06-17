@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SuperHeroApp</string>
+    <string name="error_something_went_wrong">Something went wrong…</string>
+    <string name="error_network_connection">Couldn\'t reach server, check internet connection</string>
+</resources>
