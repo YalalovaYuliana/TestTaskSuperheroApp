@@ -9,4 +9,5 @@ interface SuperheroRepository {
     fun getAllSuperheroes(): Flow<Resource<List<Superhero>>>
     fun getSuperheroesByPublisher(publisher: String): Flow<Resource<List<Superhero>>>
     suspend fun updateFavoriteStatus(superheroId: Int, isFavourite: Boolean)
+    fun getAllPublishers(): Flow<Resource<List<String>>>
 }

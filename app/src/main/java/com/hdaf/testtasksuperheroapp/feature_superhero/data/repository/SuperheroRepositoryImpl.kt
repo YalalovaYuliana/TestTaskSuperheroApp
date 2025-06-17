@@ -1,6 +1,6 @@
 package com.hdaf.testtasksuperheroapp.feature_superhero.data.repository
 
-import android.content.Context
+import android.app.Application
 import com.hdaf.testtasksuperheroapp.R
 import com.hdaf.testtasksuperheroapp.core.util.Resource
 import com.hdaf.testtasksuperheroapp.feature_superhero.data.local.SuperheroDao
@@ -15,7 +15,7 @@ import retrofit2.HttpException
 class SuperheroRepositoryImpl(
     private val superheroApi: SuperheroApi,
     private val superheroDao: SuperheroDao,
-    private val context: Context
+    private val app: Application
 ) : SuperheroRepository {
     override fun getAllSuperheroes(): Flow<Resource<List<Superhero>>> = flow {
         emit(Resource.Loading())
@@ -30,14 +30,14 @@ class SuperheroRepositoryImpl(
         } catch (e: HttpException) {
             emit(
                 Resource.Error(
-                    message = context.getString(R.string.error_something_went_wrong),
+                    message = app.getString(R.string.error_something_went_wrong),
                     data = superheroes
                 )
             )
         } catch (e: IOException) {
             emit(
                 Resource.Error(
-                    message = context.getString(R.string.error_network_connection),
+                    message = app.getString(R.string.error_network_connection),
                     data = superheroes
                 )
             )
@@ -55,7 +55,7 @@ class SuperheroRepositoryImpl(
                     superheroDao.getSuperheroesByPublisher(publisher).map { it.toSuperhero() }
                 emit(Resource.Success(superheroes))
             } catch (e: Exception) {
-                emit(Resource.Error(message = context.getString(R.string.error_something_went_wrong)))
+                emit(Resource.Error(message = app.getString(R.string.error_something_went_wrong)))
             }
         }
 
@@ -64,5 +64,16 @@ class SuperheroRepositoryImpl(
             superheroId = superheroId,
             isFavourite = isFavourite
         )
+    }
+
+    override fun getAllPublishers(): Flow<Resource<List<String>>> = flow {
+        emit(Resource.Loading())
+        try {
+            val publishers =
+                superheroDao.getAllPublishers()
+            emit(Resource.Success(publishers))
+        } catch (e: Exception) {
+            emit(Resource.Error(message = app.getString(R.string.error_something_went_wrong)))
+        }
     }
 }

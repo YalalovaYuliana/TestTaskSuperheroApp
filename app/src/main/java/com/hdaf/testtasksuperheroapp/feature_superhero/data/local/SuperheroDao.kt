@@ -28,4 +28,7 @@ interface SuperheroDao {
 
     @Query("UPDATE superheroentity SET isFavourite = :isFavourite WHERE superheroId = :superheroId")
     suspend fun updateFavoriteStatus(superheroId: Int, isFavourite: Boolean)
+
+    @Query("SELECT DISTINCT publisher FROM superheroentity")
+    suspend fun getAllPublishers(): List<String>
 }
