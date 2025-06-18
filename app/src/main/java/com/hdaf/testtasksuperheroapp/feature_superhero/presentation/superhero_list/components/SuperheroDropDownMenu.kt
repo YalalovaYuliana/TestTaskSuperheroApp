@@ -1,5 +1,6 @@
 package com.hdaf.testtasksuperheroapp.feature_superhero.presentation.superhero_list.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,6 +46,7 @@ fun SuperheroDropDownMenu(
     ) {
         Row(
             modifier = Modifier
+                .background(MaterialTheme.colorScheme.surfaceContainer)
                 .fillMaxWidth()
                 .padding(dimensionResource(R.dimen.card_inner_padding)),
             horizontalArrangement = Arrangement.SpaceBetween

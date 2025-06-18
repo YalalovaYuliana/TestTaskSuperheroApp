@@ -3,6 +3,7 @@ package com.hdaf.testtasksuperheroapp.feature_superhero.presentation.common
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -36,6 +37,7 @@ fun SuperheroTopAppBar(
     onNavigationIconClick: () -> Unit
 ) {
     TopAppBar(
+        modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.top_app_bar_padding)),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent,
             scrolledContainerColor = Color.Transparent
@@ -56,12 +58,12 @@ fun SuperheroTopAppBar(
                 modifier = Modifier
                     .size(dimensionResource(R.dimen.profile_icon_size))
                     .clip(shape = CircleShape)
-                    .background(MaterialTheme.colorScheme.primary),
+                    .background(if (isMainScreen) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceContainer),
                 onClick = { }
             ) {
                 Icon(
                     imageVector = Icons.Default.Menu,
-                    tint = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    tint = if (isMainScreen) MaterialTheme.colorScheme.surfaceContainerHighest else MaterialTheme.colorScheme.primary,
                     contentDescription = stringResource(R.string.menu_button)
                 )
             }
@@ -71,7 +73,7 @@ fun SuperheroTopAppBar(
                 modifier = Modifier
                     .size(dimensionResource(R.dimen.profile_icon_size))
                     .clip(shape = CircleShape)
-                    .background(MaterialTheme.colorScheme.primary),
+                    .background(MaterialTheme.colorScheme.surfaceContainer),
                 onClick = onNavigationIconClick
             ) {
                 if (isMainScreen) {
@@ -83,7 +85,7 @@ fun SuperheroTopAppBar(
                 } else {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        tint = MaterialTheme.colorScheme.surfaceContainerHighest,
+                        tint = MaterialTheme.colorScheme.primary,
                         contentDescription = stringResource(R.string.back_button)
                     )
                 }
