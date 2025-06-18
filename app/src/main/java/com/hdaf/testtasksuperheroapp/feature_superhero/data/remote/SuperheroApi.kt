@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface SuperheroApi {
 
-    @GET("/all.json")
+    @GET("all.json")
     suspend fun getAllSuperheroes(): List<SuperheroDto>
 }

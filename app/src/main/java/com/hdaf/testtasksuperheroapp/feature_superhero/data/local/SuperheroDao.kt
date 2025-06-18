@@ -10,7 +10,7 @@ import com.hdaf.testtasksuperheroapp.feature_superhero.data.local.entity.Superhe
 interface SuperheroDao {
 
     @Query("SELECT * FROM superheroentity")
-    fun getAllSuperHeroes(): List<SuperheroEntity>
+    suspend fun getAllSuperHeroes(): List<SuperheroEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSuperheros(

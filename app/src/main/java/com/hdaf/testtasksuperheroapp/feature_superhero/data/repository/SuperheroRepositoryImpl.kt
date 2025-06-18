@@ -11,8 +11,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
-class SuperheroRepositoryImpl(
+class SuperheroRepositoryImpl @Inject constructor(
     private val superheroApi: SuperheroApi,
     private val superheroDao: SuperheroDao,
     private val context: Context
