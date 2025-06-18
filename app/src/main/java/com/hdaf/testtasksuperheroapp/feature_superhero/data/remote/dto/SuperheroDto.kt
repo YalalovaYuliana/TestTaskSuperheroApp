@@ -15,15 +15,15 @@ data class SuperheroDto(
 ) {
     fun toSuperheroEntity(): SuperheroEntity = SuperheroEntity(
         superheroId = id ?: 0,
-        alias = name ?: "unknown",
-        realName = biography?.fullName ?: "unknown",
-        occupation = work?.occupation ?: "unknown",
-        gender = appearance?.gender ?: "unknown",
-        race = appearance?.race ?: "unknown",
-        firstAppearance = biography?.firstAppearance ?: "unknown",
-        alignment = biography?.alignment ?: "unknown",
-        publisher = biography?.publisher ?: "unknown",
-        imageUrl = images?.md ?: "unknown",
+        alias = name ?: "-",
+        realName = biography?.fullName ?: "-",
+        occupation = work?.occupation ?: "-",
+        gender = appearance?.gender ?: "-",
+        race = appearance?.race ?: "-",
+        firstAppearance = biography?.firstAppearance ?: "-",
+        alignment = biography?.alignment ?: "-",
+        publisher = biography?.publisher ?: "-",
+        imageUrl = images?.lg ?: "-",
         isFavourite = false
     )
 }

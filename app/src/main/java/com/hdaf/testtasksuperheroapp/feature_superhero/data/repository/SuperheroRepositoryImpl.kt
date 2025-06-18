@@ -31,7 +31,7 @@ class SuperheroRepositoryImpl @Inject constructor(
 
         try {
             val remoteSuperheroes = superheroApi.getAllSuperheroes()
-            superheroDao.deleteAllSuperheros()
+            //superheroDao.deleteAllSuperheros()
             superheroDao.insertSuperheros(remoteSuperheroes.map { it.toSuperheroEntity() })
         } catch (e: HttpException) {
             emit(
@@ -75,6 +75,7 @@ class SuperheroRepositoryImpl @Inject constructor(
             superheroId = superheroId,
             isFavourite = isFavourite
         )
+
     }
 
     override fun getAllPublishers(): Flow<Resource<List<String>>> = flow {

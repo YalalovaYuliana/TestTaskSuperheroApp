@@ -16,7 +16,7 @@ data class SuperheroEntity(
     val alignment: String,
     val publisher: String,
     val imageUrl: String,
-    val isFavourite: Boolean = false
+    var isFavourite: Boolean = false
 ) {
     fun toSuperhero(): Superhero {
         return Superhero(

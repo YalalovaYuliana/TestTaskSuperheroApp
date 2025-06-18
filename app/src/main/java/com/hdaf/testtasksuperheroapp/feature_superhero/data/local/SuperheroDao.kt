@@ -13,9 +13,20 @@ interface SuperheroDao {
     suspend fun getAllSuperHeroes(): List<SuperheroEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSuperheros(
-        superheroes: List<SuperheroEntity>
-    )
+    suspend fun insertSuperherosRaw(superheroes: List<SuperheroEntity>)
+
+    suspend fun insertSuperheros(superheroes: List<SuperheroEntity>) {
+        superheroes.forEach { superhero ->
+            val existingHero = getSuperheroByIdOrNull(superhero.superheroId ?: 0)
+            if (existingHero != null) {
+                superhero.isFavourite = existingHero.isFavourite
+            }
+        }
+        insertSuperherosRaw(superheroes)
+    }
+
+    @Query("SELECT * FROM superheroentity WHERE superheroId = :superheroId")
+    suspend fun getSuperheroByIdOrNull(superheroId: Int): SuperheroEntity?
 
     @Query("DELETE FROM superheroentity")
     suspend fun deleteAllSuperheros()
@@ -29,6 +40,6 @@ interface SuperheroDao {
     @Query("UPDATE superheroentity SET isFavourite = :isFavourite WHERE superheroId = :superheroId")
     suspend fun updateFavoriteStatus(superheroId: Int, isFavourite: Boolean)
 
-    @Query("SELECT DISTINCT publisher FROM superheroentity")
+    @Query("SELECT DISTINCT publisher FROM superheroentity WHERE publisher != '-' AND publisher != ''")
     suspend fun getAllPublishers(): List<String>
 }

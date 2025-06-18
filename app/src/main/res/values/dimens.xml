@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="superhero_card_image_size">100dp</dimen>
+    <dimen name="superhero_card_image_size_height">100dp</dimen>
+    <dimen name="superhero_card_image_size_width">60dp</dimen>
     <dimen name="card_inner_padding">15dp</dimen>
+    <dimen name="dropdown_card_corner">40dp</dimen>
+    <dimen name="dropdown_menu_padding">16dp</dimen>
+    <dimen name="list_item_padding">8dp</dimen>
+    <dimen name="list_item_inner_padding">4dp</dimen>
+    <dimen name="toolbar_padding">12dp</dimen>
+    <dimen name="superhero_info_image_size_height">450dp</dimen>
+    <dimen name="info_card_offset">-50dp</dimen>
+    <dimen name="info_card_inner_padding">10dp</dimen>
+    <dimen name="profile_icon_size">50dp</dimen>
+    <dimen name="spacer_medium">50dp</dimen>
+    <dimen name="divider_thickness">1dp</dimen>
+    <dimen name="divider_padding">20dp</dimen>
 </resources>

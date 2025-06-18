@@ -30,8 +30,15 @@ class SuperheroListViewModel @Inject constructor(
     val state: State<SuperheroListState> = _state
 
     init {
-        loadAllSuperheroes()
-        loadPublishers()
+        viewModelScope.launch {
+            getAllSuperheroesUseCase().collect {
+                updateState(it)
+
+                if (it is Resource.Success) {
+                    loadPublishers()
+                }
+            }
+        }
     }
 
     private fun loadPublishers() {
@@ -40,14 +47,14 @@ class SuperheroListViewModel @Inject constructor(
                 when (result) {
                     is Resource.Success -> {
                         val publishers = listOf("All superheroes") + (result.data ?: emptyList())
-                        _state.value = SuperheroListState(
+                        _state.value = _state.value.copy(
                             publishers = publishers,
                             isLoading = false
                         )
                     }
 
                     is Resource.Error -> {
-                        _state.value = SuperheroListState(
+                        _state.value = _state.value.copy(
                             isLoading = false,
                             error = result.message
                                 ?: context.getString(R.string.error_unexpected)
@@ -55,7 +62,7 @@ class SuperheroListViewModel @Inject constructor(
                     }
 
                     is Resource.Loading -> {
-                        _state.value = SuperheroListState(
+                        _state.value = _state.value.copy(
                             isLoading = true
                         )
                     }
@@ -85,19 +92,19 @@ class SuperheroListViewModel @Inject constructor(
 
     private fun updateState(result: Resource<List<Superhero>>) {
         _state.value = when (result) {
-            is Resource.Success -> SuperheroListState(
+            is Resource.Success -> _state.value.copy(
                 superheroItems = result.data ?: emptyList(),
                 isLoading = false
             )
 
-            is Resource.Error -> SuperheroListState(
+            is Resource.Error -> _state.value.copy(
                 superheroItems = result.data ?: emptyList(),
                 isLoading = false,
                 error = result.message
                     ?: context.getString(R.string.error_unexpected)
             )
 
-            is Resource.Loading -> SuperheroListState(
+            is Resource.Loading -> _state.value.copy(
                 superheroItems = result.data ?: emptyList(),
                 isLoading = true
             )

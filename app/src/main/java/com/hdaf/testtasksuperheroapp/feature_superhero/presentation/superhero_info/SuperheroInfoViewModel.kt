@@ -30,26 +30,26 @@ class SuperheroInfoViewModel @Inject constructor(
     val state: State<SuperheroInfoState> = _state
 
     init {
-        savedStateHandle.get<Int>(Constants.PARAM_SUPERHERO_ID)?.let { superheroId ->
-            getSuperheroById(superheroId)
+        savedStateHandle.get<String>(Constants.PARAM_SUPERHERO_ID)?.let { superheroId ->
+            getSuperheroById(superheroId.toInt())
         }
     }
 
     private fun getSuperheroById(superheroId: Int) {
         getSuperheroByIdUseCase(superheroId).onEach { result ->
             when (result) {
-                is Resource.Success -> _state.value = SuperheroInfoState(
+                is Resource.Success -> _state.value = _state.value.copy(
                     superhero = result.data,
                     isLoading = false
                 )
 
-                is Resource.Error -> _state.value = SuperheroInfoState(
+                is Resource.Error -> _state.value = _state.value.copy(
                     isLoading = false,
                     error = result.message
                         ?: context.getString(R.string.error_unexpected)
                 )
 
-                is Resource.Loading -> _state.value = SuperheroInfoState(
+                is Resource.Loading -> _state.value = _state.value.copy(
                     isLoading = true
                 )
             }
@@ -57,6 +57,12 @@ class SuperheroInfoViewModel @Inject constructor(
     }
 
     fun onUpdateFavouriteStatus(superheroId: Int, isFavourite: Boolean) {
+        _state.value.superhero?.let { currentHero ->
+            _state.value = _state.value.copy(
+                superhero = currentHero.copy(isFavourite = isFavourite)
+            )
+        }
+
         viewModelScope.launch {
             updateFavouriteStatusUseCase(
                 superheroId = superheroId,
