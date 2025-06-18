@@ -4,6 +4,7 @@ import com.hdaf.testtasksuperheroapp.feature_superhero.domain.model.Superhero
 
 data class SuperheroListState(
     val superheroItems: List<Superhero> = emptyList(),
+    val currentPublisher: String = "",
     val publishers: List<String> = emptyList(),
     val isLoading: Boolean = false,
     val error: String = ""

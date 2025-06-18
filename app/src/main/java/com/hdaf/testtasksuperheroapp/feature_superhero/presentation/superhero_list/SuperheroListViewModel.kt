@@ -49,6 +49,7 @@ class SuperheroListViewModel @Inject constructor(
                         val publishers = listOf("All superheroes") + (result.data ?: emptyList())
                         _state.value = _state.value.copy(
                             publishers = publishers,
+                            currentPublisher = publishers.first(),
                             isLoading = false
                         )
                     }
@@ -88,6 +89,9 @@ class SuperheroListViewModel @Inject constructor(
                     }
             }
         }
+        _state.value = _state.value.copy(
+            currentPublisher = publisher ?: ""
+        )
     }
 
     private fun updateState(result: Resource<List<Superhero>>) {

@@ -49,7 +49,7 @@ fun SuperheroTopAppBar(
                     text = stringResource(R.string.superhero),
                     textAlign = TextAlign.Center,
                     style = Typography.headlineLarge,
-                    color = MaterialTheme.colorScheme.surfaceContainerHighest
+                    color = MaterialTheme.colorScheme.surfaceContainerHigh
                 )
             }
         },
@@ -92,6 +92,17 @@ fun SuperheroTopAppBar(
             }
         }
     )
+}
+
+@Preview
+@Composable
+fun SuperheroTopAppBarPreviewMainScreen() {
+    TestTaskSuperHeroAppTheme {
+        SuperheroTopAppBar(
+            isMainScreen = true,
+            onNavigationIconClick = {}
+        )
+    }
 }
 
 @Preview

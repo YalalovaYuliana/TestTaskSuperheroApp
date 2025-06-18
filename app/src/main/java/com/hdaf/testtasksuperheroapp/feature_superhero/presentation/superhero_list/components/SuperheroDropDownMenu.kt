@@ -30,11 +30,11 @@ import com.hdaf.testtasksuperheroapp.ui.theme.Typography
 @Composable
 fun SuperheroDropDownMenu(
     modifier: Modifier = Modifier,
+    currentPublisher: String,
     publishers: List<String>,
     onPublisherClick: (String) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var text by remember { mutableStateOf("All superheroes") }
 
     Card(
         modifier = modifier
@@ -53,7 +53,7 @@ fun SuperheroDropDownMenu(
         ) {
             Text(
                 modifier = Modifier.weight(1f),
-                text = text,
+                text = currentPublisher,
                 style = Typography.headlineSmall,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
@@ -80,7 +80,6 @@ fun SuperheroDropDownMenu(
                     onClick = {
                         onPublisherClick(publisher)
                         expanded = false
-                        text = publisher
                     }
                 )
             }

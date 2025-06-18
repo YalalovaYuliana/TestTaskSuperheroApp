@@ -53,6 +53,7 @@ fun SuperheroListScreen(
             ) {
                 SuperheroDropDownMenu(
                     modifier = Modifier.padding(dimensionResource(R.dimen.dropdown_menu_padding)),
+                    currentPublisher = state.currentPublisher,
                     publishers = state.publishers,
                     onPublisherClick = { publisher ->
                         viewModel.onPublisherSelected(publisher)
