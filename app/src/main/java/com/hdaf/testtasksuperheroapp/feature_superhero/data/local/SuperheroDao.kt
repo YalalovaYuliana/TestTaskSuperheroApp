@@ -20,8 +20,8 @@ interface SuperheroDao {
     @Query("DELETE FROM superheroentity")
     suspend fun deleteAllSuperheros()
 
-    //    @Query("SELECT * FROM superheroentity WHERE superheroId = :superheroId")
-//    suspend fun getSuperheroById(superheroId: Int): SuperheroEntity
+    @Query("SELECT * FROM superheroentity WHERE superheroId = :superheroId")
+    suspend fun getSuperheroById(superheroId: Int): SuperheroEntity
 
     @Query("SELECT * FROM superheroentity WHERE publisher = :publisher")
     suspend fun getSuperheroesByPublisher(publisher: String): List<SuperheroEntity>

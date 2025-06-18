@@ -2,4 +2,8 @@
     <string name="app_name">SuperHeroApp</string>
     <string name="error_something_went_wrong">Something went wrong…</string>
     <string name="error_network_connection">Couldn\'t reach server, check internet connection</string>
+    <string name="error_unexpected">An unexpected error occurred</string>
+    <string name="error_hero_not_found">Hero not found</string>
+    <string name="menu_button">Menu button</string>
+    <string name="profile_button">Profile button</string>
 </resources>

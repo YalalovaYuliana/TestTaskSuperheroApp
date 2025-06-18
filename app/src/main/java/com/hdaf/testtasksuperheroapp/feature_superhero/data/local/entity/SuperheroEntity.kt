@@ -20,6 +20,7 @@ data class SuperheroEntity(
 ) {
     fun toSuperhero(): Superhero {
         return Superhero(
+            superheroId = superheroId ?: 0,
             alias = alias,
             realName = realName,
             occupation = occupation,

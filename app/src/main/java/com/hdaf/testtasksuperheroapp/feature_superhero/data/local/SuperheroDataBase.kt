@@ -6,7 +6,8 @@ import com.hdaf.testtasksuperheroapp.feature_superhero.data.local.entity.Superhe
 
 @Database(
     entities = [SuperheroEntity::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class SuperheroDataBase : RoomDatabase() {
 

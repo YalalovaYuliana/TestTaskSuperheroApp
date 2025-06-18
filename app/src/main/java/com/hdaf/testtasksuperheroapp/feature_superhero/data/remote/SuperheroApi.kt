@@ -7,11 +7,4 @@ interface SuperheroApi {
 
     @GET("/all.json")
     suspend fun getAllSuperheroes(): List<SuperheroDto>
-
-//    @GET("/id/{superheroId}.json")
-//    suspend fun getSuperheroById(@Path("superheroId") superheroId: String): SuperheroDto
-
-    companion object {
-        const val BASE_URL = "https://akabab.github.io/superhero-api/api"
-    }
 }

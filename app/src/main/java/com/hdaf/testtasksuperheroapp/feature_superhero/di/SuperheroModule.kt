@@ -1,6 +1,7 @@
 package com.hdaf.testtasksuperheroapp.feature_superhero.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.hdaf.testtasksuperheroapp.feature_superhero.data.local.SuperheroDataBase
 import com.hdaf.testtasksuperheroapp.feature_superhero.data.remote.SuperheroApi
@@ -8,8 +9,10 @@ import com.hdaf.testtasksuperheroapp.feature_superhero.data.repository.Superhero
 import com.hdaf.testtasksuperheroapp.feature_superhero.domain.repository.SuperheroRepository
 import com.hdaf.testtasksuperheroapp.feature_superhero.domain.use_case.GetAllPublishersUseCase
 import com.hdaf.testtasksuperheroapp.feature_superhero.domain.use_case.GetAllSuperheroesUseCase
+import com.hdaf.testtasksuperheroapp.feature_superhero.domain.use_case.GetSuperheroByIdUseCase
 import com.hdaf.testtasksuperheroapp.feature_superhero.domain.use_case.GetSuperheroesByPublisherUseCase
 import com.hdaf.testtasksuperheroapp.feature_superhero.domain.use_case.UpdateFavouriteStatusUseCase
+import com.hdaf.testtasksuperheroapp.feature_superhero.util.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,6 +23,14 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object SuperheroModule {
+
+    @Provides
+    @Singleton
+    fun provideGetSuperheroByIdUseCase(
+        superheroRepository: SuperheroRepository
+    ): GetSuperheroByIdUseCase {
+        return GetSuperheroByIdUseCase(superheroRepository)
+    }
 
     @Provides
     @Singleton
@@ -55,15 +66,21 @@ object SuperheroModule {
 
     @Provides
     @Singleton
+    fun provideAppContext(app: Application): Context {
+        return app.applicationContext
+    }
+
+    @Provides
+    @Singleton
     fun provideSuperheroRepository(
         superheroApi: SuperheroApi,
         superheroDataBase: SuperheroDataBase,
-        app: Application
+        context: Context
     ): SuperheroRepository {
         return SuperheroRepositoryImpl(
             superheroApi = superheroApi,
             superheroDao = superheroDataBase.dao,
-            app = app
+            context = context
         )
     }
 
@@ -83,7 +100,7 @@ object SuperheroModule {
     @Singleton
     fun provideSuperheroApi(): SuperheroApi {
         return Retrofit.Builder()
-            .baseUrl(SuperheroApi.BASE_URL)
+            .baseUrl(Constants.BASE_URL)
             .build()
             .create(SuperheroApi::class.java)
     }

@@ -1,6 +1,7 @@
 package com.hdaf.testtasksuperheroapp.feature_superhero.domain.model
 
 data class Superhero(
+    val superheroId: Int,
     val alias: String,
     val realName: String,
     val occupation: String,

@@ -1,15 +1,18 @@
-package com.hdaf.testtasksuperheroapp.feature_superhero.presentation.superhero_info
+package com.hdaf.testtasksuperheroapp.feature_superhero.presentation.superhero_list
 
+import android.content.Context
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hdaf.testtasksuperheroapp.R
 import com.hdaf.testtasksuperheroapp.core.util.Resource
 import com.hdaf.testtasksuperheroapp.feature_superhero.domain.model.Superhero
 import com.hdaf.testtasksuperheroapp.feature_superhero.domain.use_case.GetAllPublishersUseCase
 import com.hdaf.testtasksuperheroapp.feature_superhero.domain.use_case.GetAllSuperheroesUseCase
 import com.hdaf.testtasksuperheroapp.feature_superhero.domain.use_case.GetSuperheroesByPublisherUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -19,7 +22,8 @@ import javax.inject.Inject
 class SuperheroListViewModel @Inject constructor(
     private val getAllSuperheroesUseCase: GetAllSuperheroesUseCase,
     private val getSuperheroesByPublisherUseCase: GetSuperheroesByPublisherUseCase,
-    private val getAllPublishersUseCase: GetAllPublishersUseCase
+    private val getAllPublishersUseCase: GetAllPublishersUseCase,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val _state = mutableStateOf(SuperheroListState())
@@ -36,20 +40,22 @@ class SuperheroListViewModel @Inject constructor(
                 when (result) {
                     is Resource.Success -> {
                         val publishers = listOf("All superheroes") + (result.data ?: emptyList())
-                        _state.value = state.value.copy(
+                        _state.value = SuperheroListState(
                             publishers = publishers,
                             isLoading = false
                         )
                     }
 
                     is Resource.Error -> {
-                        _state.value = state.value.copy(
-                            isLoading = false
+                        _state.value = SuperheroListState(
+                            isLoading = false,
+                            error = result.message
+                                ?: context.getString(R.string.error_unexpected)
                         )
                     }
 
                     is Resource.Loading -> {
-                        _state.value = state.value.copy(
+                        _state.value = SuperheroListState(
                             isLoading = true
                         )
                     }
@@ -79,17 +85,19 @@ class SuperheroListViewModel @Inject constructor(
 
     private fun updateState(result: Resource<List<Superhero>>) {
         _state.value = when (result) {
-            is Resource.Success -> state.value.copy(
+            is Resource.Success -> SuperheroListState(
                 superheroItems = result.data ?: emptyList(),
                 isLoading = false
             )
 
-            is Resource.Error -> state.value.copy(
+            is Resource.Error -> SuperheroListState(
                 superheroItems = result.data ?: emptyList(),
-                isLoading = false
+                isLoading = false,
+                error = result.message
+                    ?: context.getString(R.string.error_unexpected)
             )
 
-            is Resource.Loading -> state.value.copy(
+            is Resource.Loading -> SuperheroListState(
                 superheroItems = result.data ?: emptyList(),
                 isLoading = true
             )
