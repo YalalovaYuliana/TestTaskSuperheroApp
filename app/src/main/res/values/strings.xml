@@ -6,7 +6,7 @@
     <string name="error_hero_not_found">Hero not found</string>
     <string name="menu_button">Menu button</string>
     <string name="profile_button">Profile button</string>
-    <string name="superhero">Superhero</string>
+    <string name="superhero">Superheroes</string>
     <string name="occupation">Occupation</string>
     <string name="gender">Gender</string>
     <string name="race">Race</string>
